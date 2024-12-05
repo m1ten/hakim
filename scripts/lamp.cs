@@ -6,30 +6,67 @@ public partial class lamp : Sprite2D
 {
 	private PointLight2D _light;
 	private bool _isOn = true;
-	
-	// Called when the node enters the scene tree for the first time.
+	private bool _isTransitioning = false;
+	private float _transitionSpeed = 4.0f;
+	private float _currentEnergy;
+	private float _targetEnergy;
+	private float _currentAlpha;
+	private float _targetAlpha;
+
 	public override void _Ready()
 	{
-		_light = GetParent().GetNode<PointLight2D>("PointLight2D");
+		_light = GetNode<PointLight2D>("PointLight2D");
+		_currentEnergy = 2.0f;
+		_targetEnergy = 2.0f;
+		_currentAlpha = 1.0f;
+		_targetAlpha = 1.0f;
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
+	public override void _Input(InputEvent @event)
+	{
+		if (@event is InputEventMouseButton mouseButton)
+		{
+			if (mouseButton.ButtonIndex == MouseButton.Left && mouseButton.Pressed)
+			{
+				Vector2 clickPosition = mouseButton.Position;
+				if (GetRect().HasPoint(ToLocal(clickPosition)))
+				{
+					ToggleLight();
+				}
+			}
+		}
+	}
+
+	private void ToggleLight()
+	{
+		_isTransitioning = true;
+		if (_isOn)
+		{
+			_isOn = false;
+			_targetEnergy = 0.3f;
+			_targetAlpha = 0.1f;
+		}
+		else
+		{
+			_isOn = true;
+			_targetEnergy = 2.0f;
+			_targetAlpha = 1.0f;
+		}
+	}
+
 	public override void _Process(double delta)
 	{
-		// if left mouse button is pressed
-		if (Input.IsActionJustPressed("left_click"))
+		if (_isTransitioning)
 		{
-			if (_isOn)
+			_currentEnergy = Mathf.MoveToward(_currentEnergy, _targetEnergy, _transitionSpeed * (float)delta);
+			_currentAlpha = Mathf.MoveToward(_currentAlpha, _targetAlpha, _transitionSpeed * (float)delta);
+
+			Modulate = new Color(1.5f, 1.5f, 1.5f, _currentAlpha);
+			_light.SetEnergy(_currentEnergy);
+
+			if (Mathf.IsEqualApprox(_currentEnergy, _targetEnergy) && Mathf.IsEqualApprox(_currentAlpha, _targetAlpha))
 			{
-				_isOn = false;
-				Modulate = new Color(1, 1, 1, 0.1f);
-				_light.SetEnergy(0.3f);
-			}
-			else
-			{
-				_isOn = true;
-				Modulate = new Color(1.5f, 1.5f, 1.5f, 1);
-				_light.SetEnergy(2);
+				_isTransitioning = false;
 			}
 		}
 	}
