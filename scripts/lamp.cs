@@ -2,12 +2,12 @@ using Godot;
 
 namespace hakim.scripts;
 
-public partial class lamp : Sprite2D
+public partial class Lamp : Sprite2D
 {
 	private PointLight2D _light;
 	private bool _isOn = true;
-	private bool _isTransitioning = false;
-	private float _transitionSpeed = 4.0f;
+	private bool _isTransitioning;
+	private const float TransitionSpeed = 4.0f;
 	private float _currentEnergy;
 	private float _targetEnergy;
 	private float _currentAlpha;
@@ -28,7 +28,7 @@ public partial class lamp : Sprite2D
 		{
 			if (mouseButton.ButtonIndex == MouseButton.Left && mouseButton.Pressed)
 			{
-				Vector2 clickPosition = mouseButton.Position;
+				var clickPosition = mouseButton.Position;
 				if (GetRect().HasPoint(ToLocal(clickPosition)))
 				{
 					ToggleLight();
@@ -58,8 +58,8 @@ public partial class lamp : Sprite2D
 	{
 		if (_isTransitioning)
 		{
-			_currentEnergy = Mathf.MoveToward(_currentEnergy, _targetEnergy, _transitionSpeed * (float)delta);
-			_currentAlpha = Mathf.MoveToward(_currentAlpha, _targetAlpha, _transitionSpeed * (float)delta);
+			_currentEnergy = Mathf.MoveToward(_currentEnergy, _targetEnergy, TransitionSpeed * (float)delta);
+			_currentAlpha = Mathf.MoveToward(_currentAlpha, _targetAlpha, TransitionSpeed * (float)delta);
 
 			Modulate = new Color(1.5f, 1.5f, 1.5f, _currentAlpha);
 			_light.SetEnergy(_currentEnergy);

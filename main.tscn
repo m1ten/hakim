@@ -2,8 +2,8 @@
 
 [ext_resource type="Texture2D" uid="uid://b7cnseg6x644m" path="res://light.png" id="1_53v5t"]
 [ext_resource type="Texture2D" uid="uid://vbphrqyb3dva" path="res://icon.svg" id="1_gbw3a"]
+[ext_resource type="Script" path="res://scripts/Lamp.cs" id="3_n7gfi"]
 [ext_resource type="Texture2D" uid="uid://v2gvn36d3oqu" path="res://lamp.png" id="3_un72n"]
-[ext_resource type="Script" path="res://scripts/lamp.cs" id="4_h086o"]
 
 [sub_resource type="Environment" id="Environment_5h4b4"]
 background_mode = 3
@@ -40,7 +40,7 @@ modulate = Color(1.5, 1.5, 1.5, 1)
 position = Vector2(576, 40)
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("3_un72n")
-script = ExtResource("4_h086o")
+script = ExtResource("3_n7gfi")
 
 [node name="PointLight2D" type="PointLight2D" parent="Lamp"]
 position = Vector2(0.000244141, 32)
