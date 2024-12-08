@@ -18,6 +18,9 @@ public partial class GameScene : Node
     private Label _finalScoreLabel;
     private Button _restartButton;
     private Control _mainUI; // Add reference to main UI container
+    private Label _tutorialLabel;
+    private Timer _tipTimer;
+    private int _currentTipIndex;
 
     public override void _Ready()
     {
@@ -43,6 +46,14 @@ public partial class GameScene : Node
         _restartButton = GetNode<Button>("%RestartButton");
 
         _mainUI = GetNode<Control>("UI");
+
+        _tutorialLabel = GetNode<Label>("%TutorialLabel");
+        _tipTimer = GetNode<Timer>("%TipTimer");
+
+        _tipTimer.Timeout += ShowNextTip;
+        _tipTimer.Start();
+
+        ShowDayTutorial();
 
         _restartButton.Pressed += RestartGame;
         _gameOverScreen.Hide();
@@ -71,6 +82,11 @@ public partial class GameScene : Node
         else
         {
             ShowGameOver();
+        }
+
+        if (_gameState.CurrentDay < 7)
+        {
+            ShowDayTutorial();
         }
     }
 
@@ -143,5 +159,33 @@ public partial class GameScene : Node
         _denyButton.Disabled = false;
         UpdateUi();
         SpawnNewPerson();
+    }
+
+    private void ShowDayTutorial()
+    {
+        if (_tutorialLabel != null)
+        {
+            var message = TutorialData.DayMessages[_gameState.CurrentDay - 1];
+            _tutorialLabel.Text = message;
+            _tutorialLabel.Modulate = new Color(1, 1, 1, 1);
+            CreateTween()
+                .TweenProperty(_tutorialLabel, "modulate:a", 0.0f, 40.0f) // Longer fade time
+                .SetTrans(Tween.TransitionType.Linear)
+                .SetDelay(5.0f); // Give time to read before starting fade
+        }
+    }
+
+    private void ShowNextTip()
+    {
+        if (_tutorialLabel != null)
+        {
+            _currentTipIndex = (_currentTipIndex + 1) % TutorialData.GameplayTips.Length;
+            _tutorialLabel.Text = TutorialData.GameplayTips[_currentTipIndex];
+            _tutorialLabel.Modulate = new Color(1, 1, 1, 1);
+            CreateTween()
+                .TweenProperty(_tutorialLabel, "modulate:a", 0.0f, 40.0f) // Longer fade time
+                .SetTrans(Tween.TransitionType.Linear)
+                .SetDelay(5.0f); // Give time to read before starting fade
+        }
     }
 }
