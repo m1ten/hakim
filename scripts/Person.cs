@@ -16,7 +16,7 @@ public abstract class Person
     private List<Traits> Traits { get; } = [];
     private List<Symptoms> Symptoms { get; } = [];
 
-    internal Disease InfectedBy { get; set; } = Disease.None;
+    internal Disease InfectedBy { get; private set; } = Disease.None;
 
     protected Person(TimePeriodClass timePeriod)
     {
@@ -24,7 +24,7 @@ public abstract class Person
 
         TimePeriod = timePeriod;
 
-        // Remove Id and Name initialization from here since they're handled elsewhere
+        // Remove ID and Name initialization from here since they're handled elsewhere
 
         YearOfBirth = (uint)GD.RandRange(timePeriod.StartDate, timePeriod.EndDate);
 
@@ -64,12 +64,16 @@ public abstract class Person
 
     private void Infect()
     {
-        if (GD.Randf() >= 0.5f)
+        // Force infection if we need to meet the minimum rate
+        var forceInfection = GameState.Instance.ShouldForceInfection;
+
+        if (!forceInfection && GD.Randf() >= 0.5f)
         {
             InfectedBy = Disease.None;
             return;
         }
 
+        // Try to infect with a disease from the current time period
         foreach (var (disease, info) in DiseaseData.Diseases)
         {
             if (disease == Disease.None) continue;
@@ -77,11 +81,26 @@ public abstract class Person
             if (!info.Conditions.TryGetValue(TimePeriod.TimePeriodE, out var condition))
                 continue;
 
-            if (condition.RequiredTraits.All(Traits.Contains) &&
-                condition.RequiredSymptoms.All(Symptoms.Contains))
+            // If forcing infection, only check symptoms
+            if (forceInfection && condition.RequiredSymptoms.All(Symptoms.Contains) ||
+                condition.RequiredTraits.All(Traits.Contains) && condition.RequiredSymptoms.All(Symptoms.Contains))
             {
                 InfectedBy = disease;
                 return;
+            }
+        }
+
+        // If we need to force infection, add the trait and symptom required for the first disease in the current time period
+        if (forceInfection)
+        {
+            var firstDisease = DiseaseData.Diseases.FirstOrDefault(d => d.Value.Conditions.ContainsKey(TimePeriod.TimePeriodE));
+            
+            if (firstDisease.Value != null)
+            {
+                var firstCondition = firstDisease.Value.Conditions[TimePeriod.TimePeriodE];
+                Traits.AddRange(firstCondition.RequiredTraits);
+                Symptoms.AddRange(firstCondition.RequiredSymptoms);
+                InfectedBy = firstDisease.Key;
             }
         }
 

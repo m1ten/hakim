@@ -26,8 +26,9 @@ public abstract class PersonFactory
 
     private static string GenerateName()
     {
-        var firstName = FirstNames[GD.RandRange(0, FirstNames.Length)];
-        var lastName = LastNames[GD.RandRange(0, LastNames.Length)];
+        // Fix array indexing by subtracting 1 from Length
+        var firstName = FirstNames[(int)GD.RandRange(0, FirstNames.Length - 1)];
+        var lastName = LastNames[(int)GD.RandRange(0, LastNames.Length - 1)];
         return $"{firstName} {lastName}";
     }
 }
