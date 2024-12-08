@@ -5,41 +5,48 @@ using Godot;
 
 namespace hakim.scripts;
 
-
-public abstract class Person()
+public abstract class Person
 {
     private TimePeriodClass TimePeriod { get; set; }
-
-    public required Guid Id { get; set; } = Guid.NewGuid();
-    public required string Name { get; init; }
+    public Guid Id { get; } = Guid.NewGuid(); // Remove required and init, set directly
+    public string Name { get; protected set; } // Make settable by derived classes
 
     private uint YearOfBirth { get; set; }
 
     private List<Traits> Traits { get; } = [];
     private List<Symptoms> Symptoms { get; } = [];
 
-    internal Disease InfectedBy { get; private set; } = Disease.None;
+    internal Disease InfectedBy { get; set; } = Disease.None;
 
-    protected Person(TimePeriodClass timePeriod) : this()
+    protected Person(TimePeriodClass timePeriod)
     {
+        ArgumentNullException.ThrowIfNull(timePeriod);
+
         TimePeriod = timePeriod;
+
+        // Remove Id and Name initialization from here since they're handled elsewhere
 
         YearOfBirth = (uint)GD.RandRange(timePeriod.StartDate, timePeriod.EndDate);
 
         var allTraits = TimePeriodData.TimePeriodTraits[timePeriod.TimePeriodE];
         var allSymptoms = TimePeriodData.TimePeriodSymptoms[timePeriod.TimePeriodE];
 
-        // Randomly add traits
-        for (var i = 0; i < GD.RandRange(1, 5); i++)
+        // Randomly add 1-3 traits
+        var traitCount = GD.RandRange(1, Math.Min(3, allTraits.Count));
+        while (Traits.Count < traitCount)
         {
-            var randomTrait = allTraits[GD.RandRange(0, allTraits.Count)];
+            var randomIndex = (int)GD.RandRange(0, allTraits.Count - 1);
+            var randomTrait = allTraits[randomIndex];
             if (!Traits.Contains(randomTrait))
                 Traits.Add(randomTrait);
         }
 
-        for (var i = 0; i < GD.RandRange(0, 3); i++)
+        // Randomly add 0-2 symptoms
+        var symptomCount = GD.RandRange(0, Math.Min(2, allSymptoms.Count));
+        while (Symptoms.Count < symptomCount)
         {
-            var randomSymptom = allSymptoms[GD.RandRange(0, allSymptoms.Count)];
+            var randomIndex = (int)GD.RandRange(0, allSymptoms.Count - 1);
+            var randomSymptom = allSymptoms[randomIndex];
             if (!Symptoms.Contains(randomSymptom))
                 Symptoms.Add(randomSymptom);
         }

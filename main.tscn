@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://ccrrulrni2okm"]
 
 [ext_resource type="Texture2D" uid="uid://b7cnseg6x644m" path="res://light.png" id="1_53v5t"]
-[ext_resource type="Texture2D" uid="uid://vbphrqyb3dva" path="res://icon.svg" id="1_gbw3a"]
+[ext_resource type="Script" path="res://scripts/GameScene.cs" id="1_k3m5j"]
 [ext_resource type="Script" path="res://scripts/Lamp.cs" id="3_n7gfi"]
 [ext_resource type="Texture2D" uid="uid://v2gvn36d3oqu" path="res://lamp.png" id="3_un72n"]
 
@@ -10,7 +10,8 @@ background_mode = 3
 glow_enabled = true
 glow_hdr_threshold = 1.5
 
-[node name="main" type="Node2D"]
+[node name="GameScene" type="Node2D"]
+script = ExtResource("1_k3m5j")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_5h4b4")
@@ -33,26 +34,95 @@ texture = ExtResource("1_53v5t")
 texture_scale = 1.5
 metadata/_edit_lock_ = true
 
-[node name="Icon" type="Sprite2D" parent="."]
-position = Vector2(576, 448)
-texture = ExtResource("1_gbw3a")
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 576.0
+offset_top = 335.0
+offset_right = 576.0
+offset_bottom = 335.0
+metadata/_edit_use_anchors_ = true
 
-[node name="Icon2" type="Sprite2D" parent="."]
-position = Vector2(960, 448)
-texture = ExtResource("1_gbw3a")
+[node name="GameInfo" type="VBoxContainer" parent="UI"]
+layout_mode = 1
+offset_left = -312.0
+offset_top = 73.0
+offset_right = 318.0
+offset_bottom = 180.0
 
-[node name="Icon3" type="Sprite2D" parent="."]
-position = Vector2(192, 448)
-texture = ExtResource("1_gbw3a")
+[node name="DayLabel" type="Label" parent="UI/GameInfo"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Day 1: Ancient"
+horizontal_alignment = 1
 
-[node name="Icon4" type="Sprite2D" parent="."]
-position = Vector2(960, 128)
-texture = ExtResource("1_gbw3a")
+[node name="ScoreLabel" type="Label" parent="UI/GameInfo"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Score: 0"
+horizontal_alignment = 1
 
-[node name="Icon5" type="Sprite2D" parent="."]
-position = Vector2(192, 128)
-texture = ExtResource("1_gbw3a")
+[node name="MandateLabel" type="Label" parent="UI/GameInfo"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Mandate: Allow all religious figures entry"
+horizontal_alignment = 1
 
-[node name="Icon6" type="Sprite2D" parent="."]
-position = Vector2(576, 192)
-texture = ExtResource("1_gbw3a")
+[node name="PersonInfo" type="VBoxContainer" parent="UI"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -280.0
+offset_top = -208.0
+offset_right = 280.0
+offset_bottom = -119.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="NameLabel" type="Label" parent="UI/PersonInfo"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Name"
+horizontal_alignment = 1
+
+[node name="TraitsLabel" type="Label" parent="UI/PersonInfo"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Traits"
+horizontal_alignment = 1
+
+[node name="SymptomsLabel" type="Label" parent="UI/PersonInfo"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Symptoms"
+horizontal_alignment = 1
+
+[node name="Controls" type="HBoxContainer" parent="UI"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -232.0
+offset_top = -111.0
+offset_right = 232.0
+offset_bottom = 32.0
+grow_horizontal = 2
+grow_vertical = 0
+alignment = 1
+
+[node name="ApproveButton" type="Button" parent="UI/Controls"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 50)
+layout_mode = 2
+text = "Approve"
+
+[node name="DenyButton" type="Button" parent="UI/Controls"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 50)
+layout_mode = 2
+text = "Deny"

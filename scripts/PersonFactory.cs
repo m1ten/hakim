@@ -20,11 +20,8 @@ public abstract class PersonFactory
     public static Person CreateForTimePeriod(TimePeriods period)
     {
         var timePeriod = new ConcreteTimePeriod(period);
-        return new ConcretePerson(timePeriod)
-        {
-            Id = Guid.NewGuid(),
-            Name = GenerateName()
-        };
+        var name = GenerateName(); // Generate name first
+        return new ConcretePerson(timePeriod, name); // Pass name to constructor
     }
 
     private static string GenerateName()
@@ -38,4 +35,10 @@ public abstract class PersonFactory
 // Concrete implementations needed for the abstract classes
 public class ConcreteTimePeriod(TimePeriods period) : TimePeriodClass(period);
 
-public class ConcretePerson(TimePeriodClass timePeriod) : Person(timePeriod);
+public class ConcretePerson : Person
+{
+    public ConcretePerson(TimePeriodClass timePeriod, string name) : base(timePeriod)
+    {
+        Name = name; // Set name here
+    }
+}

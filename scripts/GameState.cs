@@ -1,3 +1,4 @@
+using Godot;
 
 namespace hakim.scripts;
 
@@ -6,11 +7,19 @@ public class GameState
     public int CurrentDay { get; private set; } = 1;
     public int Score { get; private set; }
     public TimePeriods CurrentTimePeriod => (TimePeriods)(CurrentDay - 1);
-    
+
     public void ProcessDecision(Person person, bool approved)
     {
+        if (person == null)
+        {
+            GD.PrintErr("Cannot process decision for null person");
+            return;
+        }
+
         var isInfected = person.InfectedBy != Disease.None;
-        var mustApprove = CheckMandate(person);
+        var mustApprove = MandateData.DailyMandates.TryGetValue(CurrentDay, out var mandate) &&
+                         mandate != null &&
+                         person.HasTraits(mandate.RequiredTraits);
 
         switch (approved)
         {
