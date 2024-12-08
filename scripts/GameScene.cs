@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Godot;
 
 namespace hakim.scripts;
@@ -24,6 +25,13 @@ public partial class GameScene : Node
     private Label _tipLabel;
     private Label _feedbackLabel;  // Add new field
     private Tween _feedbackTween; // Add this field with other fields
+
+    // Add new fields
+    private Control _diseaseInfoScreen;
+    private Label _diseaseDescriptionLabel;
+    private Label _diseaseOriginLabel;
+    private Label _diseaseFactsLabel;
+    private Button _continueButton;
 
     public override void _Ready()
     {
@@ -60,13 +68,56 @@ public partial class GameScene : Node
         _feedbackLabel = GetNode<Label>("%FeedbackLabel");
         _feedbackLabel.Hide();
 
-        ShowDayTutorial();
+        _diseaseInfoScreen = GetNode<Control>("%DiseaseInfoScreen");
+        _diseaseDescriptionLabel = GetNode<Label>("%DiseaseDescription");
+        _diseaseOriginLabel = GetNode<Label>("%DiseaseOrigin");
+        _diseaseFactsLabel = GetNode<Label>("%DiseaseFacts");
+        _continueButton = GetNode<Button>("%ContinueButton");
+
+        _continueButton.Pressed += OnContinuePressed;
+
+        // Show initial disease info before starting day 1
+        ShowDiseaseInfo();
+        _mainUI.Hide(); // Hide main UI until player continues
 
         _restartButton.Pressed += RestartGame;
         _gameOverScreen.Hide();
 
         UpdateUi();
         SpawnNewPerson();
+    }
+
+    private void ShowDiseaseInfo()
+    {
+        var disease = DiseaseData.Diseases.FirstOrDefault(d =>
+            d.Value.Conditions.ContainsKey(_gameState.CurrentTimePeriod)).Key;
+
+        if (disease != Disease.None)
+        {
+            var info = DiseaseData.Diseases[disease];
+            _diseaseDescriptionLabel.Text = info.Description;
+            _diseaseOriginLabel.Text = $"Origin: {info.Origin}";
+            _diseaseFactsLabel.Text = $"Quick Facts:\n• " + string.Join("\n• ", info.QuickFacts);
+
+            _diseaseInfoScreen.Show();
+            _mainUI.Hide();
+        }
+        else
+        {
+            StartDay();
+        }
+    }
+
+    private void OnContinuePressed()
+    {
+        StartDay();
+    }
+
+    private void StartDay()
+    {
+        _diseaseInfoScreen.Hide();
+        _mainUI.Show();
+        ShowDayTutorial();
     }
 
     private void ProcessDecision(bool approved)
@@ -90,18 +141,19 @@ public partial class GameScene : Node
 
             // Kill existing tween if any
             _feedbackTween?.Kill();
-            
+
             // Reset feedback label
             _feedbackLabel.Show();
             _feedbackLabel.Text = reason;
             _feedbackLabel.Modulate = new Color(1, 0.3f, 0.3f, 1);
-            
+
             // Create new tween
             _feedbackTween = CreateTween();
             _feedbackTween
                 .TweenProperty(_feedbackLabel, "modulate:a", 0.0f, 3.0f)
                 .SetTrans(Tween.TransitionType.Linear);
-            _feedbackTween.Finished += () => {
+            _feedbackTween.Finished += () =>
+            {
                 _feedbackLabel.Hide();
                 _feedbackTween = null;
             };
@@ -115,8 +167,7 @@ public partial class GameScene : Node
         else if (_gameState.CurrentDay < 7)
         {
             _gameState.AdvanceDay();
-            SpawnNewPerson();
-            UpdateUi();
+            ShowDiseaseInfo(); // Show disease info before starting new day
         }
         else
         {
@@ -193,13 +244,11 @@ public partial class GameScene : Node
     {
         _gameState.Reset();
         _gameOverScreen.Hide();
-        _mainUI.Show();
-        _approveButton.Disabled = false;
-        _denyButton.Disabled = false;
-        
-        // Reset game state and UI
+
+        // Show disease info at start of new game
+        ShowDiseaseInfo();
+
         UpdateUi();
-        ShowDayTutorial(); // Add this line to reset tutorial message
         SpawnNewPerson();
     }
 
