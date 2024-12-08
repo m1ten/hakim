@@ -11,6 +11,9 @@ public class GameState
 
     private const int PeoplePerDay = 5;
     private const float MinInfectionRate = 0.33f;
+    private const int CORRECT_DECISION_SCORE = 2;
+    private const int WRONG_DECISION_SCORE = -3;
+    private const int MANDATE_VIOLATION_SCORE = -4;
 
     public int CurrentDay { get; private set; } = 1;
     public int Score { get; private set; }
@@ -43,16 +46,22 @@ public class GameState
                          mandate != null &&
                          person.HasTraits(mandate.RequiredTraits);
 
-        switch (approved)
+        // Correct decisions
+        if ((approved && !isInfected) || (!approved && isInfected))
         {
-            case true when !isInfected:
-                Score += 1;
-                break;
-            case true when isInfected:
-            case false when mustApprove:
-                Score -= 2;
-                break;
+            Score += CORRECT_DECISION_SCORE;
+            return;
         }
+
+        // Mandate violations (worst penalty)
+        if (!approved && mustApprove)
+        {
+            Score += MANDATE_VIOLATION_SCORE;
+            return;
+        }
+
+        // Wrong decisions
+        Score += WRONG_DECISION_SCORE;
     }
 
     private bool CheckMandate(Person person)

@@ -129,8 +129,8 @@ public abstract class Person
     private string GenerateBackstory(TimePeriods period, Traits[] traits)
     {
         var backstory = BackstoryData.TimePeriodBackstories[period];
-        var selectedStory = backstory.GetBackstory(traits);
-        return selectedStory;
+        var isInfected = InfectedBy != Disease.None;
+        return backstory.GetBackstory(traits, isInfected);
     }
-}
+} 
 

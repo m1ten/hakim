@@ -21,6 +21,7 @@ public partial class GameScene : Node
     private Label _tutorialLabel;
     private Timer _tipTimer;
     private int _currentTipIndex;
+    private Label _tipLabel;
 
     public override void _Ready()
     {
@@ -48,6 +49,7 @@ public partial class GameScene : Node
         _mainUI = GetNode<Control>("UI");
 
         _tutorialLabel = GetNode<Label>("%TutorialLabel");
+        _tipLabel = GetNode<Label>("%TipLabel");
         _tipTimer = GetNode<Timer>("%TipTimer");
 
         _tipTimer.Timeout += ShowNextTip;
@@ -170,22 +172,22 @@ public partial class GameScene : Node
             _tutorialLabel.Modulate = new Color(1, 1, 1, 1);
             CreateTween()
                 .TweenProperty(_tutorialLabel, "modulate:a", 0.0f, 40.0f) // Longer fade time
-                .SetTrans(Tween.TransitionType.Linear)
-                .SetDelay(5.0f); // Give time to read before starting fade
+                .SetTrans(Tween.TransitionType.Linear);
         }
     }
 
     private void ShowNextTip()
     {
-        if (_tutorialLabel != null)
+        if (_tipLabel != null)
         {
             _currentTipIndex = (_currentTipIndex + 1) % TutorialData.GameplayTips.Length;
-            _tutorialLabel.Text = TutorialData.GameplayTips[_currentTipIndex];
-            _tutorialLabel.Modulate = new Color(1, 1, 1, 1);
+            _tipLabel.Text = TutorialData.GameplayTips[_currentTipIndex];
+
+            // Fade only the tip
+            _tipLabel.Modulate = Colors.White;
             CreateTween()
-                .TweenProperty(_tutorialLabel, "modulate:a", 0.0f, 40.0f) // Longer fade time
-                .SetTrans(Tween.TransitionType.Linear)
-                .SetDelay(5.0f); // Give time to read before starting fade
+                .TweenProperty(_tipLabel, "modulate:a", 0.5f, 1.0f)
+                .SetTrans(Tween.TransitionType.Linear);
         }
     }
 }
