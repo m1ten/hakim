@@ -23,6 +23,7 @@ public partial class GameScene : Node
     private int _currentTipIndex;
     private Label _tipLabel;
     private Label _feedbackLabel;  // Add new field
+    private Tween _feedbackTween; // Add this field with other fields
 
     public override void _Ready()
     {
@@ -87,12 +88,23 @@ public partial class GameScene : Node
                 _ => "Wrong! You made an incorrect decision"
             };
 
-            _feedbackLabel.Text = reason;
+            // Kill existing tween if any
+            _feedbackTween?.Kill();
+            
+            // Reset feedback label
             _feedbackLabel.Show();
-            CreateTween()
+            _feedbackLabel.Text = reason;
+            _feedbackLabel.Modulate = new Color(1, 0.3f, 0.3f, 1);
+            
+            // Create new tween
+            _feedbackTween = CreateTween();
+            _feedbackTween
                 .TweenProperty(_feedbackLabel, "modulate:a", 0.0f, 3.0f)
-                .SetTrans(Tween.TransitionType.Linear)
-                .Finished += () => _feedbackLabel.Hide();
+                .SetTrans(Tween.TransitionType.Linear);
+            _feedbackTween.Finished += () => {
+                _feedbackLabel.Hide();
+                _feedbackTween = null;
+            };
         }
 
         if (_gameState.RemainingPeople > 0)
@@ -111,7 +123,8 @@ public partial class GameScene : Node
             ShowGameOver();
         }
 
-        if (_gameState.CurrentDay < 7)
+        // Changed condition to show tutorial for all days including day 7
+        if (_gameState.CurrentDay <= 7)
         {
             ShowDayTutorial();
         }
@@ -121,7 +134,6 @@ public partial class GameScene : Node
     {
         if (_gameState == null)
         {
-            GD.PrintErr("GameState is null in UpdateUi");
             return;
         }
 
@@ -184,7 +196,10 @@ public partial class GameScene : Node
         _mainUI.Show();
         _approveButton.Disabled = false;
         _denyButton.Disabled = false;
+        
+        // Reset game state and UI
         UpdateUi();
+        ShowDayTutorial(); // Add this line to reset tutorial message
         SpawnNewPerson();
     }
 
@@ -194,10 +209,7 @@ public partial class GameScene : Node
         {
             var message = TutorialData.DayMessages[_gameState.CurrentDay - 1];
             _tutorialLabel.Text = message;
-            _tutorialLabel.Modulate = new Color(1, 1, 1, 1);
-            CreateTween()
-                .TweenProperty(_tutorialLabel, "modulate:a", 0.0f, 40.0f) // Longer fade time
-                .SetTrans(Tween.TransitionType.Linear);
+            _tutorialLabel.Modulate = new Color(1, 0.9f, 0.7f, 1); // Set color but don't fade
         }
     }
 
