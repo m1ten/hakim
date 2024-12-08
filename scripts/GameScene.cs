@@ -22,6 +22,7 @@ public partial class GameScene : Node
     private Timer _tipTimer;
     private int _currentTipIndex;
     private Label _tipLabel;
+    private Label _feedbackLabel;  // Add new field
 
     public override void _Ready()
     {
@@ -55,6 +56,9 @@ public partial class GameScene : Node
         _tipTimer.Timeout += ShowNextTip;
         _tipTimer.Start();
 
+        _feedbackLabel = GetNode<Label>("%FeedbackLabel");
+        _feedbackLabel.Hide();
+
         ShowDayTutorial();
 
         _restartButton.Pressed += RestartGame;
@@ -68,7 +72,28 @@ public partial class GameScene : Node
     {
         if (_currentPerson == null) return;
 
-        _gameState.ProcessDecision(_currentPerson, approved);
+        var result = _gameState.ProcessDecision(_currentPerson, approved);
+
+        // Show feedback for wrong decisions
+        if (!result.IsCorrect)
+        {
+            var reason = approved switch
+            {
+                true when _currentPerson.InfectedBy != Disease.None =>
+                    $"Wrong! You let in someone infected with {_currentPerson.InfectedBy}",
+                false when _currentPerson.InfectedBy == Disease.None => "Wrong! You denied entry to a healthy person",
+                true when !_gameState.IsPersonAllowedByMandate(_currentPerson) =>
+                    "Wrong! This person did not meet the Wazir's mandate requirements",
+                _ => "Wrong! You made an incorrect decision"
+            };
+
+            _feedbackLabel.Text = reason;
+            _feedbackLabel.Show();
+            CreateTween()
+                .TweenProperty(_feedbackLabel, "modulate:a", 0.0f, 3.0f)
+                .SetTrans(Tween.TransitionType.Linear)
+                .Finished += () => _feedbackLabel.Hide();
+        }
 
         if (_gameState.RemainingPeople > 0)
         {

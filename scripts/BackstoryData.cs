@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
@@ -7,32 +6,30 @@ namespace hakim.scripts;
 
 public record BackstoryTemplate(string Story, Traits[] RequiredTraits, bool IsInfected);
 
-public class TimePeriodBackstory
+public class TimePeriodBackstory(List<BackstoryTemplate> backstories, List<string> infectionHints)
 {
-    private readonly List<BackstoryTemplate> _backstories;
-    private readonly List<string> _infectionHints;
-
-    public TimePeriodBackstory(List<BackstoryTemplate> backstories, List<string> infectionHints)
-    {
-        _backstories = backstories;
-        _infectionHints = infectionHints;
-    }
-
     public string GetBackstory(Traits[] personTraits, bool isInfected)
     {
-        var matchingStories = _backstories
-            .Where(b => b.RequiredTraits.All(personTraits.Contains) && b.IsInfected == isInfected)
+        var matchingStories = backstories
+            .Where(b => b.RequiredTraits.Any(personTraits.Contains) && b.IsInfected == isInfected)
             .ToList();
 
-        if (!matchingStories.Any())
+        if (matchingStories.Count == 0)
         {
-            var defaultStory = _backstories[0].Story;
-            if (isInfected)
+            // Try finding any story with matching infection status
+            matchingStories = backstories.Where(b => b.IsInfected == isInfected).ToList();
+
+            if (matchingStories.Count == 0)
             {
-                var randomHint = _infectionHints[GD.RandRange(0, _infectionHints.Count - 1)];
-                return $"{defaultStory} {randomHint}";
+                // Absolute fallback - use mysterious person story
+                const string defaultStory = "A mysterious person that refuses to share their story.";
+                if (isInfected)
+                {
+                    var randomHint = infectionHints[GD.RandRange(0, infectionHints.Count - 1)];
+                    return $"{defaultStory} {randomHint}";
+                }
+                return defaultStory;
             }
-            return defaultStory;
         }
 
         var randomIndex = GD.RandRange(0, matchingStories.Count - 1);

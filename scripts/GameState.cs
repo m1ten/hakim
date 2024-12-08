@@ -11,9 +11,12 @@ public class GameState
 
     private const int PeoplePerDay = 5;
     private const float MinInfectionRate = 0.33f;
-    private const int CORRECT_DECISION_SCORE = 2;
-    private const int WRONG_DECISION_SCORE = -3;
-    private const int MANDATE_VIOLATION_SCORE = -4;
+    private const int CorrectDecisionScore = 2;
+    private const int WrongDecisionScore = -3;
+    private const int MandateViolationScore = -4;
+    private const float BaseInfectionRate = 0.3f; // 30% base infection rate
+    private const int PEOPLE_PER_DAY = 5;
+    private int _infectedCount = 0;
 
     public int CurrentDay { get; private set; } = 1;
     public int Score { get; private set; }
@@ -28,45 +31,48 @@ public class GameState
         Score = 0;
         RemainingPeople = PeoplePerDay;
         InfectedCount = 0;
+        _infectedCount = 0;
     }
 
-    public void ProcessDecision(Person person, bool approved)
+    public class DecisionResult
     {
-        if (person == null)
+        public bool IsCorrect { get; set; }
+        public int ScoreChange { get; set; }
+    }
+
+    public (bool IsCorrect, int ScoreChange) ProcessDecision(Person person, bool approved)
+    {
+        var isHealthy = person.InfectedBy == Disease.None;
+        var meetsMandate = IsPersonAllowedByMandate(person);
+
+        int scoreChange;
+        bool isCorrect;
+
+        if (meetsMandate)
         {
-            GD.PrintErr("Cannot process decision for null person");
-            return;
+            scoreChange = approved ? ScoreConstants.ApproveMandate : ScoreConstants.DenyMandate;
+            isCorrect = approved;
+        }
+        else if (isHealthy)
+        {
+            scoreChange = approved ? ScoreConstants.ApproveHealthy : ScoreConstants.DenyHealthy;
+            isCorrect = approved;
+        }
+        else
+        {
+            scoreChange = approved ? ScoreConstants.ApproveUnhealthy : ScoreConstants.DenyUnhealthy;
+            isCorrect = !approved;
         }
 
+        Score += scoreChange;
         RemainingPeople--;
-        if (person.InfectedBy != Disease.None) InfectedCount++;
 
-        var isInfected = person.InfectedBy != Disease.None;
-        var mustApprove = MandateData.DailyMandates.TryGetValue(CurrentDay, out var mandate) &&
-                         mandate != null &&
-                         person.HasTraits(mandate.RequiredTraits);
-
-        // Correct decisions
-        if ((approved && !isInfected) || (!approved && isInfected))
-        {
-            Score += CORRECT_DECISION_SCORE;
-            return;
-        }
-
-        // Mandate violations (worst penalty)
-        if (!approved && mustApprove)
-        {
-            Score += MANDATE_VIOLATION_SCORE;
-            return;
-        }
-
-        // Wrong decisions
-        Score += WRONG_DECISION_SCORE;
+        return (isCorrect, scoreChange);
     }
 
-    private bool CheckMandate(Person person)
+    public bool IsPersonAllowedByMandate(Person person)
     {
-        return MandateData.DailyMandates.TryGetValue(CurrentDay, out var mandate) && person.HasTraits(mandate.RequiredTraits);
+        return !MandateData.DailyMandates.TryGetValue(CurrentDay, out var mandate) || person.HasTraits(mandate.RequiredTraits);
     }
 
     public void AdvanceDay()
@@ -80,6 +86,6 @@ public class GameState
     }
 
     public bool ShouldForceInfection =>
-        RemainingPeople > 0 &&
-        InfectedCount < Math.Ceiling(PeoplePerDay * MinInfectionRate);
+        // Force infection if we haven't had any infected people today
+        RemainingPeople == 1 && _infectedCount == 0;
 }
