@@ -11,15 +11,14 @@ public abstract class Person()
     private TimePeriodClass TimePeriod { get; set; }
 
     public required Guid Id { get; set; } = Guid.NewGuid();
-    public required string Name { get; set; }
+    public required string Name { get; init; }
 
     private uint YearOfBirth { get; set; }
 
-    public string Occupation { get; set; }
     private List<Traits> Traits { get; } = [];
     private List<Symptoms> Symptoms { get; } = [];
 
-    private Disease InfectedBy { get; set; } = Disease.None;
+    internal Disease InfectedBy { get; private set; } = Disease.None;
 
     protected Person(TimePeriodClass timePeriod) : this()
     {
@@ -33,20 +32,28 @@ public abstract class Person()
         // Randomly add traits
         for (var i = 0; i < GD.RandRange(1, 5); i++)
         {
-            var randomTrait = allTraits[(int)GD.RandRange(0, allTraits.Count)];
+            var randomTrait = allTraits[GD.RandRange(0, allTraits.Count)];
             if (!Traits.Contains(randomTrait))
                 Traits.Add(randomTrait);
         }
 
         for (var i = 0; i < GD.RandRange(0, 3); i++)
         {
-            var randomSymptom = allSymptoms[(int)GD.RandRange(0, allSymptoms.Count)];
+            var randomSymptom = allSymptoms[GD.RandRange(0, allSymptoms.Count)];
             if (!Symptoms.Contains(randomSymptom))
                 Symptoms.Add(randomSymptom);
         }
 
         Infect();
     }
+
+    public bool HasTraits(Traits[] requiredTraits)
+    {
+        return requiredTraits.All(Traits.Contains);
+    }
+
+    public IEnumerable<string> GetTraits() => Traits.Select(t => t.ToString());
+    public IEnumerable<string> GetSymptoms() => Symptoms.Select(s => s.ToString());
 
     private void Infect()
     {

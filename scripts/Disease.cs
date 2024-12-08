@@ -90,7 +90,7 @@ public static class DiseaseData
             new Dictionary<TimePeriods, DiseaseCondition>
             {
                 { TimePeriods.Victorian, new DiseaseCondition(
-                    [Traits.Working_Class, Traits.Industrial],
+                    [Traits.WorkingClass, Traits.Industrial],
                     [Symptoms.PersistentCough, Symptoms.ChronicBronchitis, Symptoms.IndustrialLungDisease]
                 )}
             }
@@ -140,7 +140,7 @@ public static class DiseaseData
             new Dictionary<TimePeriods, DiseaseCondition>
             {
                 { TimePeriods.Modern, new DiseaseCondition(
-                    [Traits.Remote_Worker, Traits.Digital_Native],
+                    [Traits.RemoteWorker, Traits.DigitalNative],
                     [Symptoms.LossOfTaste, Symptoms.LossOfSmell, Symptoms.RespiratoryDistress]
                 )}
             }
