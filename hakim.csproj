@@ -8,4 +8,7 @@
     <StartProgram>/Applications/Godot_mono.app/Contents/MacOS/Godot</StartProgram>
     <StartWorkingDirectory>./</StartWorkingDirectory>
   </PropertyGroup>
+  <ItemGroup>
+    <Content Include="hakim.md" />
+  </ItemGroup>
 </Project>
