@@ -18,6 +18,9 @@ public abstract class Person
 
     internal Disease InfectedBy { get; private set; } = Disease.None;
 
+    // Add new property
+    public string Backstory { get; private set; }
+
     protected Person(TimePeriodClass timePeriod)
     {
         ArgumentNullException.ThrowIfNull(timePeriod);
@@ -50,6 +53,9 @@ public abstract class Person
             if (!Symptoms.Contains(randomSymptom))
                 Symptoms.Add(randomSymptom);
         }
+
+        // Generate backstory based on traits and time period
+        Backstory = GenerateBackstory(timePeriod.TimePeriodE, Traits.ToArray());
 
         Infect();
     }
@@ -118,6 +124,13 @@ public abstract class Person
         }
 
         InfectedBy = Disease.None;
+    }
+
+    private string GenerateBackstory(TimePeriods period, Traits[] traits)
+    {
+        var backstory = BackstoryData.TimePeriodBackstories[period];
+        var selectedStory = backstory.GetBackstory(traits);
+        return selectedStory;
     }
 }
 

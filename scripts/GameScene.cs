@@ -82,9 +82,9 @@ public partial class GameScene : Node
             return;
         }
 
-        if (_dayLabel != null) 
+        if (_dayLabel != null)
             _dayLabel.Text = $"Day {_gameState.CurrentDay}: {_gameState.CurrentTimePeriod} ({_gameState.RemainingPeople} remaining)";
-        
+
         if (_scoreLabel != null)
             _scoreLabel.Text = $"Score: {_gameState.Score}";
 
@@ -117,10 +117,12 @@ public partial class GameScene : Node
         var nameLabel = _personInfo?.GetNode<Label>("%NameLabel");
         var traitsLabel = _personInfo?.GetNode<Label>("%TraitsLabel");
         var symptomsLabel = _personInfo?.GetNode<Label>("%SymptomsLabel");
+        var backstoryLabel = _personInfo?.GetNode<Label>("%BackstoryLabel"); // Add this line
 
         if (nameLabel != null) nameLabel.Text = _currentPerson.Name;
         if (traitsLabel != null) traitsLabel.Text = $"Traits: {string.Join(", ", _currentPerson.GetTraits())}";
         if (symptomsLabel != null) symptomsLabel.Text = $"Symptoms: {string.Join(", ", _currentPerson.GetSymptoms())}";
+        if (backstoryLabel != null) backstoryLabel.Text = $"Backstory: {_currentPerson.Backstory}"; // Add this line
     }
 
     private void ShowGameOver()
