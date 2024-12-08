@@ -67,13 +67,17 @@ public abstract class Person
         // Force infection if we need to meet the minimum rate
         var forceInfection = GameState.Instance.ShouldForceInfection;
 
-        if (!forceInfection && GD.Randf() >= 0.5f)
+        // Normal infection chance (50%)
+        if (!forceInfection)
         {
-            InfectedBy = Disease.None;
-            return;
+            if (GD.Randf() >= 0.5f)
+            {
+                InfectedBy = Disease.None;
+                return;
+            }
         }
 
-        // Try to infect with a disease from the current time period
+        // Try to match symptoms with a disease from the current time period
         foreach (var (disease, info) in DiseaseData.Diseases)
         {
             if (disease == Disease.None) continue;
@@ -81,26 +85,35 @@ public abstract class Person
             if (!info.Conditions.TryGetValue(TimePeriod.TimePeriodE, out var condition))
                 continue;
 
-            // If forcing infection, only check symptoms
-            if (forceInfection && condition.RequiredSymptoms.All(Symptoms.Contains) ||
-                condition.RequiredTraits.All(Traits.Contains) && condition.RequiredSymptoms.All(Symptoms.Contains))
+            // Check if person has matching symptoms for the disease
+            if (condition.RequiredSymptoms.All(Symptoms.Contains))
             {
                 InfectedBy = disease;
                 return;
             }
         }
 
-        // If we need to force infection, add the trait and symptom required for the first disease in the current time period
+        // If we need to force infection and no disease was assigned
         if (forceInfection)
         {
-            var firstDisease = DiseaseData.Diseases.FirstOrDefault(d => d.Value.Conditions.ContainsKey(TimePeriod.TimePeriodE));
-            
-            if (firstDisease.Value != null)
+            var availableDiseases = DiseaseData.Diseases
+                .Where(d => d.Key != Disease.None && d.Value.Conditions.ContainsKey(TimePeriod.TimePeriodE))
+                .ToList();
+
+            if (availableDiseases.Any())
             {
-                var firstCondition = firstDisease.Value.Conditions[TimePeriod.TimePeriodE];
-                Traits.AddRange(firstCondition.RequiredTraits);
-                Symptoms.AddRange(firstCondition.RequiredSymptoms);
-                InfectedBy = firstDisease.Key;
+                var randomDisease = availableDiseases[(int)GD.RandRange(0, availableDiseases.Count - 1)];
+                var condition = randomDisease.Value.Conditions[TimePeriod.TimePeriodE];
+
+                // Add required symptoms for the disease
+                foreach (var symptom in condition.RequiredSymptoms)
+                {
+                    if (!Symptoms.Contains(symptom))
+                        Symptoms.Add(symptom);
+                }
+
+                InfectedBy = randomDisease.Key;
+                return;
             }
         }
 
