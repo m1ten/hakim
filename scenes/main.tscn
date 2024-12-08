@@ -211,3 +211,18 @@ text = "Restart Game"
 unique_name_in_owner = true
 wait_time = 20.0
 autostart = true
+
+[node name="SoundEffects" type="Node" parent="."]
+
+[node name="ApproveSound" type="AudioStreamPlayer" parent="SoundEffects"]
+unique_name_in_owner = true
+stream = ExtResource("approve_sound")
+
+[node name="DenySound" type="AudioStreamPlayer" parent="SoundEffects"]
+unique_name_in_owner = true
+stream = ExtResource("deny_sound")
+
+[node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("background_music")
+autoplay = true
