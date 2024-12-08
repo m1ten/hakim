@@ -56,11 +56,15 @@ public abstract class Person()
             return;
         }
 
-        var possibleDiseases = DiseaseData.TimePeriodDiseases[TimePeriod.TimePeriodE];
-        foreach (var (disease, condition) in possibleDiseases)
+        foreach (var (disease, info) in DiseaseData.Diseases)
         {
-            if (condition.RequiredTraits.All(t => Traits.Contains(t)) &&
-                condition.RequiredSymptoms.All(s => Symptoms.Contains(s)))
+            if (disease == Disease.None) continue;
+
+            if (!info.Conditions.TryGetValue(TimePeriod.TimePeriodE, out var condition))
+                continue;
+
+            if (condition.RequiredTraits.All(Traits.Contains) &&
+                condition.RequiredSymptoms.All(Symptoms.Contains))
             {
                 InfectedBy = disease;
                 return;
