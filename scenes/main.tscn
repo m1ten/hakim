@@ -17,6 +17,7 @@ script = ExtResource("1_k3m5j")
 environment = SubResource("Environment_5h4b4")
 
 [node name="Lamp" type="Sprite2D" parent="."]
+visible = false
 modulate = Color(1.5, 1.5, 1.5, 1)
 position = Vector2(576, 40)
 scale = Vector2(0.25, 0.25)
@@ -287,6 +288,7 @@ theme_override_constants/separation = 15
 
 [node name="DiseaseDescription" type="Label" parent="DiseaseInfoScreen/Panel/VBoxContainer"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(800, 80)
 layout_mode = 2
 text = "Disease Description"
 horizontal_alignment = 1
@@ -295,6 +297,7 @@ autowrap_mode = 3
 
 [node name="DiseaseOrigin" type="Label" parent="DiseaseInfoScreen/Panel/VBoxContainer"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(800, 60)
 layout_mode = 2
 text = "Origin:"
 horizontal_alignment = 1
@@ -303,6 +306,7 @@ autowrap_mode = 3
 
 [node name="DiseaseFacts" type="Label" parent="DiseaseInfoScreen/Panel/VBoxContainer"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(800, 200)
 layout_mode = 2
 text = "Quick Facts:"
 horizontal_alignment = 1
