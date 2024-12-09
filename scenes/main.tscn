@@ -259,7 +259,7 @@ offset_bottom = 392.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Panel" type="Panel" parent="DiseaseInfoScreen"]
+[node name="MarginContainer" type="MarginContainer" parent="DiseaseInfoScreen"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -273,20 +273,11 @@ offset_bottom = 224.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="DiseaseInfoScreen/Panel"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 24.0
-offset_top = 24.0
-offset_right = -24.0
-offset_bottom = -24.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="VBoxContainer" type="VBoxContainer" parent="DiseaseInfoScreen/MarginContainer"]
+layout_mode = 2
 theme_override_constants/separation = 15
 
-[node name="DiseaseDescription" type="Label" parent="DiseaseInfoScreen/Panel/VBoxContainer"]
+[node name="DiseaseDescription" type="Label" parent="DiseaseInfoScreen/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(800, 80)
 layout_mode = 2
@@ -295,7 +286,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
 
-[node name="DiseaseOrigin" type="Label" parent="DiseaseInfoScreen/Panel/VBoxContainer"]
+[node name="DiseaseOrigin" type="Label" parent="DiseaseInfoScreen/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(800, 60)
 layout_mode = 2
@@ -304,7 +295,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
 
-[node name="DiseaseFacts" type="Label" parent="DiseaseInfoScreen/Panel/VBoxContainer"]
+[node name="DiseaseFacts" type="Label" parent="DiseaseInfoScreen/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(800, 200)
 layout_mode = 2
@@ -313,7 +304,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
 
-[node name="ContinueButton" type="Button" parent="DiseaseInfoScreen/Panel/VBoxContainer"]
+[node name="ContinueButton" type="Button" parent="DiseaseInfoScreen/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
