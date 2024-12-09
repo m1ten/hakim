@@ -11,4 +11,7 @@
   <ItemGroup>
     <Content Include="hakim.md" />
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="RandomDataGenerator.Net" Version="1.0.18" />
+  </ItemGroup>
 </Project>

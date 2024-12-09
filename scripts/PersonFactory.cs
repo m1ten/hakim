@@ -1,21 +1,12 @@
 using System;
 using Godot;
+using RandomDataGenerator.FieldOptions;
+using RandomDataGenerator.Randomizers;
 
 namespace hakim.scripts;
 
 public abstract class PersonFactory
 {
-    private static readonly string[] FirstNames =
-    [
-        "Ahmed", "Sofia", "Marcus", "Isabella", "Zhang", "Priya", "James",
-        "Elena", "Mohammed", "Aisha", "Viktor", "Maria", "Kai", "Yuki"
-    ];
-
-    private static readonly string[] LastNames =
-    [
-        "Al-Rashid", "Silva", "von Weber", "Chang", "Jonas", "Smith",
-        "Ivanov", "García", "Kim", "Müller", "Sato", "Singh"
-    ];
 
     public static Person CreateForTimePeriod(TimePeriods period)
     {
@@ -26,9 +17,10 @@ public abstract class PersonFactory
 
     private static string GenerateName()
     {
-        // Fix array indexing by subtracting 1 from Length
-        var firstName = FirstNames[(int)GD.RandRange(0, FirstNames.Length - 1)];
-        var lastName = LastNames[(int)GD.RandRange(0, LastNames.Length - 1)];
+        var randomizerFirstName = RandomizerFactory.GetRandomizer(new FieldOptionsFirstName());
+        var randomizerLastName = RandomizerFactory.GetRandomizer(new FieldOptionsLastName());
+        var firstName = randomizerFirstName.Generate();
+        var lastName = randomizerLastName.Generate();
         return $"{firstName} {lastName}";
     }
 }
