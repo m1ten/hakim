@@ -29,6 +29,12 @@ theme_override_font_sizes/font_size = 48
 text = "Hakim of Amara"
 horizontal_alignment = 1
 
+[node name="Creator" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "made by miten"
+horizontal_alignment = 1
+
 [node name="Description" type="Label" parent="CenterContainer/VBoxContainer"]
 custom_minimum_size = Vector2(600, 0)
 layout_mode = 2
