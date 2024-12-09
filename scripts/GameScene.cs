@@ -23,15 +23,23 @@ public partial class GameScene : Node
     private Timer _tipTimer;
     private int _currentTipIndex;
     private Label _tipLabel;
-    private Label _feedbackLabel;  // Add new field
-    private Tween _feedbackTween; // Add this field with other fields
+    private Label _feedbackLabel;
+    private Tween _feedbackTween;
 
-    // Add new fields
     private Control _diseaseInfoScreen;
     private Label _diseaseDescriptionLabel;
     private Label _diseaseOriginLabel;
     private Label _diseaseFactsLabel;
     private Button _continueButton;
+
+    // private AudioStreamPlayer _buttonSound;
+    private AudioStreamPlayer _correctSound;
+    private AudioStreamPlayer _wrongSound;
+    private AudioStreamPlayer _dayEndSound;
+    private AudioStreamPlayer _gameOverSound;
+
+    // Add new field for tracking active sound
+    private AudioStreamPlayer _currentSound;
 
     public override void _Ready()
     {
@@ -83,6 +91,26 @@ public partial class GameScene : Node
         _restartButton.Pressed += RestartGame;
         _gameOverScreen.Hide();
 
+        // Initialize audio players
+        // _buttonSound = new AudioStreamPlayer();
+        _correctSound = new AudioStreamPlayer();
+        _wrongSound = new AudioStreamPlayer();
+        _dayEndSound = new AudioStreamPlayer();
+        _gameOverSound = new AudioStreamPlayer();
+
+        // AddChild(_buttonSound);
+        AddChild(_correctSound);
+        AddChild(_wrongSound);
+        AddChild(_dayEndSound);
+        AddChild(_gameOverSound);
+
+        // Load audio streams
+        // _buttonSound.Stream = GD.Load<AudioStream>("res://sounds/click.wav");
+        _correctSound.Stream = GD.Load<AudioStream>("res://sounds/correct.wav");
+        _wrongSound.Stream = GD.Load<AudioStream>("res://sounds/incorrect.wav");
+        _dayEndSound.Stream = GD.Load<AudioStream>("res://sounds/day_end.wav");
+        _gameOverSound.Stream = GD.Load<AudioStream>("res://sounds/game_over.wav");
+
         UpdateUi();
         SpawnNewPerson();
     }
@@ -110,6 +138,7 @@ public partial class GameScene : Node
 
     private void OnContinuePressed()
     {
+        // _buttonSound.Play();
         StartDay();
     }
 
@@ -120,15 +149,29 @@ public partial class GameScene : Node
         ShowDayTutorial();
     }
 
+    private void PlaySound(AudioStreamPlayer sound)
+    {
+        _currentSound?.Stop();
+
+        _currentSound = sound;
+        _currentSound.Play();
+    }
+
     private void ProcessDecision(bool approved)
     {
         if (_currentPerson == null) return;
 
         var result = _gameState.ProcessDecision(_currentPerson, approved);
 
-        // Show feedback for wrong decisions
-        if (!result.IsCorrect)
+        // Use new PlaySound method
+        if (result.IsCorrect)
         {
+            PlaySound(_correctSound);
+        }
+        else
+        {
+            PlaySound(_wrongSound);
+            // Show feedback for wrong decisions
             var reason = approved switch
             {
                 true when _currentPerson.InfectedBy != Disease.None =>
@@ -174,10 +217,18 @@ public partial class GameScene : Node
             ShowGameOver();
         }
 
-        // Changed condition to show tutorial for all days including day 7
         if (_gameState.CurrentDay <= 7)
         {
             ShowDayTutorial();
+        }
+
+        if (_gameState.RemainingPeople == 0 && _gameState.CurrentDay <= 7)
+        {
+            PlaySound(_dayEndSound);
+        }
+        else if (_gameState.CurrentDay > 7)
+        {
+            PlaySound(_gameOverSound);
         }
     }
 
@@ -233,6 +284,7 @@ public partial class GameScene : Node
 
     private void ShowGameOver()
     {
+        PlaySound(_gameOverSound);
         _finalScoreLabel.Text = $"Final Score: {_gameState.Score}";
         _gameOverScreen.Show();
         _mainUI.Hide(); // Hide the main UI
@@ -242,14 +294,18 @@ public partial class GameScene : Node
 
     private void RestartGame()
     {
-        _gameState.Reset();
-        _gameOverScreen.Hide();
+        // // _buttonSound.Play();
+        // _gameState.Reset();
+        // _gameOverScreen.Hide();
 
-        // Show disease info at start of new game
-        ShowDiseaseInfo();
+        // // Show disease info at start of new game
+        // ShowDiseaseInfo();
 
-        UpdateUi();
-        SpawnNewPerson();
+        // UpdateUi();
+        // SpawnNewPerson();
+
+        // just exit the game
+        GetTree().Quit();
     }
 
     private void ShowDayTutorial()
