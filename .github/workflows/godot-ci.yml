@@ -6,7 +6,7 @@ on: push
 env:
   GODOT_VERSION: 4.3
   EXPORT_NAME: hakim
-  PROJECT_PATH: hakim
+  PROJECT_PATH: .
 
 jobs:
   export-windows:
