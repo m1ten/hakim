@@ -97,7 +97,7 @@ public partial class GameScene : Node
             var info = DiseaseData.Diseases[disease];
             _diseaseDescriptionLabel.Text = info.Description;
             _diseaseOriginLabel.Text = $"Origin: {info.Origin}";
-            _diseaseFactsLabel.Text = $"Quick Facts:\n• " + string.Join("\n• ", info.QuickFacts);
+            _diseaseFactsLabel.Text = $"Quick Facts:\n• {string.Join("\n• ", info.QuickFacts)}\n\nSources:\n• {string.Join("\n• ", info.Sources)}";
 
             _diseaseInfoScreen.Show();
             _mainUI.Hide();

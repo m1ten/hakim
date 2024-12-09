@@ -20,6 +20,7 @@ public record DiseaseInfo(
     string Description,
     string Origin,
     string[] QuickFacts,
+    string[] Sources,  // Add sources property
     Dictionary<TimePeriods, DiseaseCondition> Conditions
 );
 
@@ -35,6 +36,9 @@ public static class DiseaseData
                 "Symptoms include fever, chills, and flu-like illness.",
                 "It kills over 200,000 people annually, mainly in sub-Saharan Africa.",
                 "Preventive measures include using insecticide-treated nets and antimalarial drugs."
+            ],
+            [
+                "World Health Organization. (n.d.). Fact sheet about malaria. World Health Organization. https://www.who.int/news-room/fact-sheets/detail/malaria",
             ],
             new Dictionary<TimePeriods, DiseaseCondition>
             {
@@ -53,6 +57,9 @@ public static class DiseaseData
                 "Symptoms include sudden fever, chills, and swollen lymph nodes, called buboes.",
                 "It killed approximately one-third of Europe’s population in the 14th century."
             ],
+            [
+                "World Health Organization. (n.d.-b). Plague. World Health Organization. https://www.who.int/news-room/fact-sheets/detail/plague",
+            ],
             new Dictionary<TimePeriods, DiseaseCondition>
             {
                 { TimePeriods.Medieval, new DiseaseCondition(
@@ -69,6 +76,9 @@ public static class DiseaseData
                 "Symptoms include rapid-onset watery diarrhea and vomiting.",
                 "It is primarily spread through contaminated water and poor sanitation.",
                 "Cholera outbreaks have been successfully controlled with improved sanitation and water treatment."
+            ],
+            [
+                "World Health Organization. (n.d.-a). Cholera. World Health Organization. https://www.who.int/news-room/fact-sheets/detail/cholera",
             ],
             new Dictionary<TimePeriods, DiseaseCondition>
             {
@@ -87,6 +97,10 @@ public static class DiseaseData
                 "TB is often associated with poverty, malnutrition, and weakened immune systems.",
                 "It is treatable with antibiotics, but drug-resistant TB is a growing concern."
             ],
+            [
+                "U.S. National Library of Medicine. (n.d.). Tuberculosis | TB | TB test. MedlinePlus. https://medlineplus.gov/tuberculosis.html",
+                "World Health Organization. (n.d.-d). Tuberculosis (TB). World Health Organization. https://www.who.int/news-room/fact-sheets/detail/tuberculosis"
+            ],
             new Dictionary<TimePeriods, DiseaseCondition>
             {
                 { TimePeriods.Victorian, new DiseaseCondition(
@@ -104,6 +118,10 @@ public static class DiseaseData
                 "Over 50 million people are estimated to have died globally.",
                 "The pandemic led to widespread health measures, including quarantines and mask-wearing."
             ],
+            [
+                "National Archives and Records Administration. (n.d.). The flu pandemic of 1918. National Archives and Records Administration. https://www.archives.gov/news/topics/flu-pandemic-1918",
+                "A&E Television Networks. (n.d.). Why was it called the “spanish flu?” History.com. https://www.history.com/news/why-was-it-called-the-spanish-flu"
+            ],
             new Dictionary<TimePeriods, DiseaseCondition>
             {
                 { TimePeriods.WorldWar, new DiseaseCondition(
@@ -119,6 +137,9 @@ public static class DiseaseData
                 "HIV is spread through blood, semen, vaginal fluids, and breast milk.",
                 "While there is no cure, antiretroviral therapy (ART) can control the virus and enable individuals to live normal lifespans.",
                 "AIDS, the final stage of HIV, severely compromises the immune system, making individuals susceptible to opportunistic infections."
+            ],
+            [
+                "What are HIV and AIDS?. HIV.gov. (n.d.). https://www.hiv.gov/hiv-basics/overview/about-hiv-and-aids/what-are-hiv-and-aids",
             ],
             new Dictionary<TimePeriods, DiseaseCondition>
             {
@@ -136,6 +157,9 @@ public static class DiseaseData
                 "Symptoms include fever, cough, shortness of breath, and loss of taste or smell.",
                 "COVID-19 spreads through respiratory droplets and can cause severe illness in older adults and those with preexisting conditions.",
                 "Vaccines and public health measures such as masks and social distancing have helped reduce transmission."
+            ],
+            [
+                "Centers for Disease Control and Prevention. (n.d.). Coronavirus disease 2019 (covid-19). Centers for Disease Control and Prevention. https://www.cdc.gov/covid/",
             ],
             new Dictionary<TimePeriods, DiseaseCondition>
             {
