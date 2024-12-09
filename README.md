@@ -1,5 +1,11 @@
 # Hakim
 
+## Download
+
+- Windows: [hakim-wx64.zip](./pkg/hakim-wx64.zip)
+- Linux: [hakim-lx64.zip](./pkg/hakim-lx64.zip)
+- ~~MacOS: [hakim.dmg](./pkg/hakim.dmg)~~
+
 ## Backstory
 
 In a future where **time travel** has become a reality, the world has discovered the ability to traverse different eras of history. Amara, once a myth, has emerged as a flourishing, advanced city-state that has discovered how to regulate this temporal travel. As **Hakim of Amara**, you are entrusted with the crucial responsibility of managing the immigration border, ensuring that people from various points in time do not bring dangerous diseases that could threaten the health of your people.
@@ -18,23 +24,23 @@ Each day in the game represents a different historical period. Immigrants from t
 
 - **Day 1: Ancient Egypt**
 
-  - **Common Diseases**: Malaria, Tuberculosis
-  - **Historical Context**: Ancient Egypt, with its grand pyramids and Nile River, had a population susceptible to diseases spread by mosquitoes and poor sanitation. Malaria was common in this era due to the marshy areas along the Nile, and tuberculosis was prevalent in densely populated areas.
+  - **Common Diseases**: Malaria
+  - **Historical Context**: Ancient Egypt, with its grand pyramids and Nile River, had a population susceptible to diseases spread by mosquitoes and poor sanitation. Malaria was common in this era due to the marshy areas along the Nile.
 
 - **Day 2: Medieval Europe**
 
   - **Common Diseases**: The Black Death (Bubonic Plague)
   - **Historical Context**: The Black Death devastated Europe in the 14th century, killing an estimated 25 million people. Bubonic plague, spread by fleas on rats, spread rapidly through European cities, causing widespread panic and social upheaval.
 
-- **Day 3: The Renaissance**
+- **Day 3: The Raj**
 
-  - **Common Diseases**: Syphilis, Smallpox
-  - **Historical Context**: The Renaissance was a time of great cultural advancement, but it was also marked by the spread of diseases like syphilis, a sexually transmitted infection that was rampant during the time. Smallpox also ravaged populations, causing high mortality.
+  - **Common Diseases**: Cholera
+  - **Historical Context**: During the British Raj in India, cholera was a major public health concern. The disease, spread through contaminated water, caused numerous outbreaks and high mortality rates in the region.
 
 - **Day 4: Victorian England**
 
-  - **Common Diseases**: Cholera, Tuberculosis
-  - **Historical Context**: The Industrial Revolution brought about crowded, unsanitary living conditions in Victorian England. Cholera, spread through contaminated water, and tuberculosis, which spread through the air, were two of the most deadly diseases of the era.
+  - **Common Diseases**: Tuberculosis
+  - **Historical Context**: In Victorian England, tuberculosis was a leading cause of death, particularly among the urban poor. The disease, known as the “white plague,” was highly contagious and spread through close contact.
 
 - **Day 5: Early 20th Century (Spanish Flu)**
 
@@ -43,12 +49,12 @@ Each day in the game represents a different historical period. Immigrants from t
 
 - **Day 6: 1970s**
 
-  - **Common Diseases**: HIV/AIDS, Hepatitis
-  - **Historical Context**: The 1970s saw the rise of the HIV/AIDS epidemic, which would go on to cause a global pandemic. The 1970s also witnessed the rise of Hepatitis, which became a major concern, particularly in the context of blood transfusions and intravenous drug use.
+  - **Common Diseases**: HIV/AIDS
+  - **Historical Context**: The emergence of HIV/AIDS in the 1970s marked the beginning of a global pandemic that continues to this day. The virus, transmitted through bodily fluids, has had a profound impact on public health and society.
 
 - **Day 7: Modern Day**
-  - **Common Diseases**: COVID-19, Multidrug-resistant Tuberculosis
-  - **Historical Context**: The COVID-19 pandemic, which began in 2019, spread globally, disrupting economies and societies. In addition, the rise of multidrug-resistant tuberculosis in the modern era has presented new challenges for public health systems around the world.
+  - **Common Diseases**: COVID-19
+  - **Historical Context**: The COVID-19 pandemic, caused by the SARS-CoV-2 virus, has affected the world in unprecedented ways. The disease, characterized by respiratory symptoms and high transmissibility, has led to widespread lockdowns, economic disruptions, and loss of life.
 
 ## Game Mechanics
 
@@ -56,9 +62,8 @@ Each day in the game represents a different historical period. Immigrants from t
 
 Each day, individuals from the historical time period will arrive at the immigration checkpoint. You must examine the following:
 
-- **Health Documents**: Check for any signs of diseases or past illnesses.
+- **Traits**: Characteristics of the individual, such as Traveler or Religious, which may provide clues to their health status or mandate requirements.
 - **Symptoms**: Pay close attention to the traveler’s physical symptoms, such as fever, coughing, or rashes, which may indicate infection.
-- **History**: Review the individual’s background and place of origin to see if they may have been exposed to any known epidemics from their time period.
 
 ### Mandates
 
@@ -72,12 +77,7 @@ Each time an immigrant arrives, you must make a decision:
 
 - **Approve**: If the individual is healthy, you approve their entry into Amara, earning **+1** score.
 - **Deny**: If the individual is infected or suspected of carrying a dangerous disease, you deny their entry, preventing the spread of disease.
-
-However, if you allow someone infected with a deadly disease to enter Amara, it will result in a **-2 penalty** to your score. If you deny entry to someone who is healthy, your score will also drop.
-
-### Time Pressure
-
-You have a limited amount of time each day to review documents and make decisions. Each day represents one turn, and if you do not make decisions quickly enough, Amara may suffer from the consequences of allowing diseases to spread. If you run out of time and Amara becomes overwhelmed by disease, you will lose your position as Hakim.
+- **Mandate**: If the individual falls under a mandate, you must follow the Wazir’s orders, even if it conflicts with your health assessment.
 
 ### Health and Trust
 

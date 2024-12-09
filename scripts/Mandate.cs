@@ -19,14 +19,14 @@ public static class MandateData
         { 2, new MandateRequirement(TimePeriods.Medieval,
             [Traits.Noble, Traits.Religious],
             "Grant entry to all nobles and clergy to maintain diplomatic relations")},
-
-        { 3, new MandateRequirement(TimePeriods.Renaissance,
-            [Traits.Artistic, Traits.Intellectual],
-            "Welcome artists and scholars to enrich Amara's culture")},
-
-        { 4, new MandateRequirement(TimePeriods.Victorian,
+        
+        { 3, new MandateRequirement(TimePeriods.Victorian,
             [Traits.UpperClass, Traits.Scientific],
             "Admit industrial innovators and aristocrats for technological advancement")},
+
+        { 4, new MandateRequirement(TimePeriods.Raj,
+            [Traits.Artistic, Traits.Intellectual],
+            "Welcome artists and scholars to enrich Amara's culture")},
 
         { 5, new MandateRequirement(TimePeriods.WorldWar,
             [Traits.Military, Traits.Brave],

@@ -7,8 +7,8 @@ public enum TimePeriods
 {
     Ancient,
     Medieval,
-    Renaissance,
     Victorian,
+    Raj,
     WorldWar,
     Seventies,
     Modern
@@ -22,8 +22,8 @@ public abstract class TimePeriodClass(TimePeriods timePeriod)
         {
             TimePeriods.Ancient => "A time of ancient civilizations",
             TimePeriods.Medieval => "Europe in the Middle Ages",
-            TimePeriods.Renaissance => "Artistic and cultural rebirth",
             TimePeriods.Victorian => "Empire and industrial revolution",
+            TimePeriods.Raj => "British rule in India",
             TimePeriods.WorldWar => "A great war",
             TimePeriods.Seventies => "The 1970s",
             TimePeriods.Modern => "The present day",
@@ -35,8 +35,8 @@ public abstract class TimePeriodClass(TimePeriods timePeriod)
         {
             TimePeriods.Ancient => -3000,
             TimePeriods.Medieval => 500,
-            TimePeriods.Renaissance => 1400,
             TimePeriods.Victorian => 1837,
+            TimePeriods.Raj => 1858,
             TimePeriods.WorldWar => 1914,
             TimePeriods.Seventies => 1970,
             TimePeriods.Modern => 2000,
@@ -48,8 +48,8 @@ public abstract class TimePeriodClass(TimePeriods timePeriod)
         {
             TimePeriods.Ancient => 0,
             TimePeriods.Medieval => 1400,
-            TimePeriods.Renaissance => 1600,
             TimePeriods.Victorian => 1901,
+            TimePeriods.Raj => 1947,
             TimePeriods.WorldWar => 1918,
             TimePeriods.Seventies => 1980,
             TimePeriods.Modern => 2024,
@@ -81,7 +81,7 @@ public enum Traits
     Unhygienic,
     Scholarly,
 
-    // Renaissance (focus on art, commerce, and learning)
+    // Raj (colonial and cultural characteristics)
     Ambitious,
     Creative,
     Merchant,
@@ -159,7 +159,7 @@ public enum Symptoms
     Chills,
     LymphNodes,
 
-    // Renaissance (urban disease symptoms)
+    // Raj (colonial health issues)
     ChronicPain,
     DigestiveIssues,
     FeverAndChills,
@@ -229,7 +229,7 @@ public static class TimePeriodData
                 Traits.Noble, Traits.Peasant, Traits.Religious, Traits.Unhygienic, Traits.Scholarly
             ]
         },
-        { TimePeriods.Renaissance, [
+        { TimePeriods.Raj, [
                 Traits.Ambitious, Traits.Creative, Traits.Merchant, Traits.SocialClimber,
                 Traits.Intellectual, Traits.Artistic, Traits.Scientific, Traits.Inventive, Traits.Diplomatic
             ]
@@ -269,16 +269,16 @@ public static class TimePeriodData
                 Symptoms.Coughing, Symptoms.OpenSores, Symptoms.Vomiting, Symptoms.Chills, Symptoms.LymphNodes
             ]
         },
-        { TimePeriods.Renaissance, [
-                Symptoms.ChronicPain, Symptoms.DigestiveIssues, Symptoms.FeverAndChills, Symptoms.Rashes,
-                Symptoms.WeakenedImmunity, Symptoms.RespiratoryProblems, Symptoms.NauseaVomiting, Symptoms.Headaches,
-                Symptoms.Dizziness
-            ]
-        },
         { TimePeriods.Victorian, [
                 Symptoms.PersistentCough, Symptoms.Exhaustion, Symptoms.NervePain, Symptoms.LeadPoisoning,
                 Symptoms.IndustrialLungDisease, Symptoms.ChronicBronchitis, Symptoms.MalnutritionVictorian,
                 Symptoms.PoorHygiene, Symptoms.Infection
+            ]
+        },
+        { TimePeriods.Raj, [
+                Symptoms.ChronicPain, Symptoms.DigestiveIssues, Symptoms.FeverAndChills, Symptoms.Rashes,
+                Symptoms.WeakenedImmunity, Symptoms.RespiratoryProblems, Symptoms.NauseaVomiting, Symptoms.Headaches,
+                Symptoms.Dizziness
             ]
         },
         { TimePeriods.WorldWar, [

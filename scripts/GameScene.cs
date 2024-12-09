@@ -211,6 +211,8 @@ public partial class GameScene : Node
         {
             _gameState.AdvanceDay();
             ShowDiseaseInfo(); // Show disease info before starting new day
+            SpawnNewPerson();
+            UpdateUi();
         }
         else
         {

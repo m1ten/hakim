@@ -9,7 +9,7 @@ public abstract class Person
 {
     private TimePeriodClass TimePeriod { get; set; }
     public Guid Id { get; } = Guid.NewGuid(); // Remove required and init, set directly
-    public string Name { get; protected set; } // Make settable by derived classes
+    public string Name { get; protected init; } // Make settable by derived classes
 
     private uint YearOfBirth { get; set; }
 

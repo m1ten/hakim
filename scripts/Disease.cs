@@ -68,26 +68,6 @@ public static class DiseaseData
                 )}
             }
         )},
-        { Disease.Cholera, new DiseaseInfo(
-            "Cholera is an infectious disease caused by ingesting contaminated food or water. It leads to severe diarrhea and dehydration, which can be fatal without treatment.",
-            "Originated in the Indian subcontinent, cholera has caused several pandemics since the 19th century.",
-            [
-                "Caused by the bacterium Vibrio cholerae.",
-                "Symptoms include rapid-onset watery diarrhea and vomiting.",
-                "It is primarily spread through contaminated water and poor sanitation.",
-                "Cholera outbreaks have been successfully controlled with improved sanitation and water treatment."
-            ],
-            [
-                "World Health Organization. (n.d.-a). Cholera. World Health Organization. https://www.who.int/news-room/fact-sheets/detail/cholera",
-            ],
-            new Dictionary<TimePeriods, DiseaseCondition>
-            {
-                { TimePeriods.Renaissance, new DiseaseCondition(
-                    [Traits.Merchant, Traits.SocialClimber],
-                    [Symptoms.DigestiveIssues, Symptoms.NauseaVomiting, Symptoms.WeakenedImmunity]
-                )}
-            }
-        )},
         { Disease.Tuberculosis, new DiseaseInfo(
             "Tuberculosis (TB) is a bacterial infection that primarily affects the lungs but can spread to other parts of the body. It is spread through the air when an infected person coughs or sneezes.",
             "TB has been known since ancient times, and it is still prevalent in many parts of the world.",
@@ -106,6 +86,26 @@ public static class DiseaseData
                 { TimePeriods.Victorian, new DiseaseCondition(
                     [Traits.WorkingClass, Traits.Industrial],
                     [Symptoms.PersistentCough, Symptoms.ChronicBronchitis, Symptoms.IndustrialLungDisease]
+                )}
+            }
+        )},
+        { Disease.Cholera, new DiseaseInfo(
+            "Cholera is an infectious disease caused by ingesting contaminated food or water. It leads to severe diarrhea and dehydration, which can be fatal without treatment.",
+            "Originated in the Indian subcontinent, cholera has caused several pandemics since the 19th century.",
+            [
+                "Caused by the bacterium Vibrio cholerae.",
+                "Symptoms include rapid-onset watery diarrhea and vomiting.",
+                "It is primarily spread through contaminated water and poor sanitation.",
+                "Cholera outbreaks have been successfully controlled with improved sanitation and water treatment."
+            ],
+            [
+                "World Health Organization. (n.d.-a). Cholera. World Health Organization. https://www.who.int/news-room/fact-sheets/detail/cholera",
+            ],
+            new Dictionary<TimePeriods, DiseaseCondition>
+            {
+                { TimePeriods.Raj, new DiseaseCondition(
+                    [Traits.Merchant, Traits.SocialClimber],
+                    [Symptoms.DigestiveIssues, Symptoms.NauseaVomiting, Symptoms.WeakenedImmunity]
                 )}
             }
         )},

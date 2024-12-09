@@ -141,56 +141,6 @@ public static class BackstoryData
             ]
         )},
 
-        { TimePeriods.Renaissance, new TimePeriodBackstory(
-            [
-                new BackstoryTemplate(
-                    "An artist whose recent work has been interrupted by recurring fevers from the ports.",
-                    [Traits.Artistic, Traits.Creative],
-                    true
-                ),
-                new BackstoryTemplate(
-                    "A merchant whose trading partners have recently succumbed to a mysterious ailment.",
-                    [Traits.Merchant, Traits.Ambitious],
-                    true
-                ),
-                new BackstoryTemplate(
-                    "A diplomat carrying letters of good health from multiple city-states.",
-                    [Traits.Diplomatic, Traits.SocialClimber],
-                    false
-                ),
-                new BackstoryTemplate(
-                    "An inventor whose latest work focuses on improving public sanitation.",
-                    [Traits.Scientific, Traits.Inventive],
-                    false
-                ),
-                new BackstoryTemplate(
-                    "An intellectual whose experiments with disease samples proved dangerous.",
-                    [Traits.Intellectual, Traits.Scientific],
-                    true
-                ),
-                new BackstoryTemplate(
-                    "A social climber who frequented infected noble courts.",
-                    [Traits.SocialClimber, Traits.Ambitious],
-                    true
-                ),
-                new BackstoryTemplate(
-                    "A creative inventor developing new methods of disease prevention.",
-                    [Traits.Creative, Traits.Inventive],
-                    false
-                ),
-                new BackstoryTemplate(
-                    "A diplomatic physician studying health practices across Europe.",
-                    [Traits.Diplomatic, Traits.Scientific],
-                    false
-                )
-            ],
-            [
-                "Their hands shake slightly when gesturing.",
-                "They appear gaunt and malnourished.",
-                "Occasional coughing interrupts their speech."
-            ]
-        )},
-
         { TimePeriods.Victorian, new TimePeriodBackstory(
             [
                 new BackstoryTemplate(
@@ -258,6 +208,56 @@ public static class BackstoryData
                 "Their breathing is labored and wheezy.",
                 "Coal dust marks their clothing.",
                 "Their complexion is unusually pale."
+            ]
+        )},
+        
+        { TimePeriods.Raj, new TimePeriodBackstory(
+            [
+                new BackstoryTemplate(
+                    "An artist whose recent work has been interrupted by recurring fevers from the ports.",
+                    [Traits.Artistic, Traits.Creative],
+                    true
+                ),
+                new BackstoryTemplate(
+                    "A merchant whose trading partners have recently succumbed to a mysterious ailment.",
+                    [Traits.Merchant, Traits.Ambitious],
+                    true
+                ),
+                new BackstoryTemplate(
+                    "A diplomat carrying letters of good health from multiple city-states.",
+                    [Traits.Diplomatic, Traits.SocialClimber],
+                    false
+                ),
+                new BackstoryTemplate(
+                    "An inventor whose latest work focuses on improving public sanitation.",
+                    [Traits.Scientific, Traits.Inventive],
+                    false
+                ),
+                new BackstoryTemplate(
+                    "An intellectual whose experiments with disease samples proved dangerous.",
+                    [Traits.Intellectual, Traits.Scientific],
+                    true
+                ),
+                new BackstoryTemplate(
+                    "A social climber who frequented infected noble courts.",
+                    [Traits.SocialClimber, Traits.Ambitious],
+                    true
+                ),
+                new BackstoryTemplate(
+                    "A creative inventor developing new methods of disease prevention.",
+                    [Traits.Creative, Traits.Inventive],
+                    false
+                ),
+                new BackstoryTemplate(
+                    "A diplomatic physician studying health practices across India.",
+                    [Traits.Diplomatic, Traits.Scientific],
+                    false
+                )
+            ],
+            [
+                "Their hands shake slightly when gesturing.",
+                "They appear gaunt and malnourished.",
+                "Occasional coughing interrupts their speech."
             ]
         )},
 
