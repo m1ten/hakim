@@ -1,4 +1,4 @@
-name: "godot-ci export"
+name: 'godot-ci export'
 on: push
 
 # NOTE: If your `project.godot` is at the repository root, set `PROJECT_PATH` below to ".".
@@ -25,6 +25,10 @@ jobs:
           mkdir -v -p ~/.config/
           mv /root/.config/godot ~/.config/godot
           mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable.mono ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable.mono
+      - name: .NET Fix
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.x
       - name: Windows Build
         run: |
           mkdir -v -p build/windows
@@ -51,6 +55,10 @@ jobs:
         run: |
           mkdir -v -p ~/.local/share/godot/export_templates/
           mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable.mono ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable.mono
+      - name: .NET Fix
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.x
       - name: Linux Build
         run: |
           mkdir -v -p build/linux
@@ -111,6 +119,10 @@ jobs:
         run: |
           mkdir -v -p ~/.local/share/godot/export_templates/
           mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable.mono ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable.mono
+      - name: .NET Fix
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.x
       - name: Mac Build
         run: |
           mkdir -v -p build/mac
