@@ -1,5 +1,3 @@
-made by miten
-
 ## Download
 
 - Windows: [hakim-wx64.zip](./pkg/hakim-wx64.zip)
