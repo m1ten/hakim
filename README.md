@@ -1,8 +1,8 @@
 ---
 title: Hakim
-description: A time-traveling medical simulation game
-author: miten
 ---
+
+made by miten
 
 ## Download
 
