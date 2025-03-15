@@ -1,3 +1,5 @@
+# Wanted to play around with Godot 4.x before porting my main game, enjoy it's open source.
+
 ## Download
 
 - Windows: [hakim-wx64.zip](./pkg/hakim-wx64.zip)
